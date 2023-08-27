@@ -12,7 +12,7 @@ type NoteRepository struct {
 	Db *gorm.DB
 }
 
-func NewNoteRespository(Db *gorm.DB) *NoteRepository {
+func NewNoteRepository(Db *gorm.DB) *NoteRepository {
 	return &NoteRepository{Db: Db}
 }
 
