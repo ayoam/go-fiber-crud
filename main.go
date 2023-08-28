@@ -43,6 +43,18 @@ func main() {
 
 	app := fiber.New()
 
+	app.Use(func(c *fiber.Ctx) error {
+		err := c.Next()
+		if err != nil {
+			// Handle the error, log it, etc.
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+				"status":  fiber.StatusInternalServerError,
+				"message": err.Error(),
+			})
+		}
+		return nil
+	})
+
 	app.Mount("/api/v1", routes)
 	log.Fatal(app.Listen(":8000"))
 }

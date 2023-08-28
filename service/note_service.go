@@ -5,7 +5,6 @@ import (
 	"notes-api/converter"
 	"notes-api/dto/request"
 	"notes-api/dto/response"
-	"notes-api/helper"
 	"notes-api/repository"
 )
 
@@ -23,9 +22,59 @@ func NewNoteService(noteRepository repository.NoteRepository, noteConverter conv
 	}
 }
 
-func (serv *NoteService) CreateNote(noteDto request.CreateUpdateNoteRequestDto) response.NoteResponseDto {
+func (serv *NoteService) CreateNote(noteDto request.CreateUpdateNoteRequestDto) (response.NoteResponseDto, error) {
 	err := serv.Validate.Struct(noteDto)
-	helper.ErrorPanic(err)
+	if err != nil {
+		return response.NoteResponseDto{}, err
+	}
 	noteModel := serv.NoteConverter.DtoToNoteModel(noteDto)
-	return serv.NoteConverter.NoteModelToDto(serv.NoteRepository.Save(noteModel))
+	return serv.NoteConverter.NoteModelToDto(serv.NoteRepository.Save(noteModel)), nil
+}
+
+func (serv *NoteService) GetNoteById(noteId int) (response.NoteResponseDto, error) {
+	noteModel, err := serv.NoteRepository.FindById(noteId)
+	if err != nil {
+		return response.NoteResponseDto{}, err
+	}
+
+	return serv.NoteConverter.NoteModelToDto(noteModel), nil
+}
+
+func (serv *NoteService) GetAllNotes() ([]response.NoteResponseDto, error) {
+	noteModelList, err := serv.NoteRepository.FindAll()
+	if err != nil {
+		return []response.NoteResponseDto{}, err
+	}
+
+	var noteModelListResponse []response.NoteResponseDto
+	for _, note := range noteModelList {
+		noteModelListResponse = append(noteModelListResponse, serv.NoteConverter.NoteModelToDto(note))
+	}
+
+	return noteModelListResponse, nil
+}
+
+func (serv *NoteService) UpdateNote(noteId int, dto request.CreateUpdateNoteRequestDto) error {
+	noteModel, err := serv.NoteRepository.FindById(noteId)
+	if err != nil {
+		return err
+	}
+
+	//update content
+	noteModel.Content = dto.Content
+
+	serv.NoteRepository.Save(noteModel)
+
+	return nil
+}
+
+func (serv *NoteService) DeleteNote(noteId int) error {
+	noteModel, err := serv.NoteRepository.FindById(noteId)
+	if err != nil {
+		return err
+	}
+
+	serv.NoteRepository.Delete(noteModel)
+
+	return nil
 }
