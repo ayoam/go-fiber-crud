@@ -10,7 +10,6 @@ Welcome to the **Go Fiber CRUD** GitHub repository! This project is a simple exa
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Features
@@ -57,9 +56,6 @@ Follow these instructions to get the project up and running on your local machin
 - `PUT /api/v1/notes/:id`: Update a note by ID (provide JSON payload).
 - `DELETE /api/v1/notes/:id`: Delete a note by ID.
 
-## Contributing
-
-Contributions are welcome! If you find any issues or want to enhance the project, feel free to submit a pull request. Please follow the [Contributing Guidelines](CONTRIBUTING.md) when making contributions.
 
 ## License
 
