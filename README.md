@@ -42,7 +42,7 @@ Follow these instructions to get the project up and running on your local machin
     ```
 ## Usage
 
-1. Start the application:
+1. Run the application:
     ```
     docker compose up
     ```
