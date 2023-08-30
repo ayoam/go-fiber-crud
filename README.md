@@ -10,6 +10,7 @@ Welcome to the **Go Fiber CRUD** GitHub repository! This project is a simple exa
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
 - [Usage](#usage)
+- [Documentation](#documentation)
 - [License](#license)
 
 ## Features
@@ -25,7 +26,6 @@ Follow these instructions to get the project up and running on your local machin
 
 ### Prerequisites
 
-- Go (1.20 or higher) should be installed. You can download it from the official [Go website](https://golang.org/dl/).
 - Git should be installed for cloning the repository.
 - Docker should be installed to run the application in a container.
 
@@ -55,6 +55,10 @@ Follow these instructions to get the project up and running on your local machin
 - `POST /api/v1/notes`: Create a new note (provide JSON payload).
 - `PUT /api/v1/notes/:id`: Update a note by ID (provide JSON payload).
 - `DELETE /api/v1/notes/:id`: Delete a note by ID.
+
+## Documentation
+
+Explore the API endpoints using Swagger documentation by navigating to `http://localhost:8000/api/v1/swagger` when the application is running.
 
 
 ## License
