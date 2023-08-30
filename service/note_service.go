@@ -54,18 +54,16 @@ func (serv *NoteService) GetAllNotes() ([]response.NoteResponseDto, error) {
 	return noteModelListResponse, nil
 }
 
-func (serv *NoteService) UpdateNote(noteId int, dto request.CreateUpdateNoteRequestDto) error {
+func (serv *NoteService) UpdateNote(noteId int, dto request.CreateUpdateNoteRequestDto) (response.NoteResponseDto, error) {
 	noteModel, err := serv.NoteRepository.FindById(noteId)
 	if err != nil {
-		return err
+		return response.NoteResponseDto{}, err
 	}
 
 	//update content
 	noteModel.Content = dto.Content
 
-	serv.NoteRepository.Save(noteModel)
-
-	return nil
+	return serv.NoteConverter.NoteModelToDto(serv.NoteRepository.Save(noteModel)), nil
 }
 
 func (serv *NoteService) DeleteNote(noteId int) error {

@@ -2,13 +2,14 @@ package router
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/swagger"
 	"notes-api/controller"
 )
 
 func NewRouter(noteController *controller.NoteController) *fiber.App {
 	router := fiber.New()
 
-	//test
+	//health check
 	router.Get("/healthchecker", func(c *fiber.Ctx) error {
 		return c.Status(200).JSON(fiber.Map{
 			"status":  "success",
@@ -24,6 +25,9 @@ func NewRouter(noteController *controller.NoteController) *fiber.App {
 		router.Put("/:id", noteController.UpdateNote)
 		router.Delete("/:id", noteController.DeleteNote)
 	})
+
+	//swagger docs
+	router.Get("/swagger/*", swagger.HandlerDefault) // default
 
 	return router
 }
